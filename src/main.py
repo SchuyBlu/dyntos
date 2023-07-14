@@ -1,7 +1,7 @@
-"""--------------------------------------------------------------------
+"""
 Author: Feanor
 Discord bot for the Kid Icarus Uprising Multiplayer server.
---------------------------------------------------------------------"""
+"""
 import hikari
 import lightbulb
 from os import getenv
