@@ -4,11 +4,23 @@ Weapons objects containing relevant methods.
 """
 
 class Blade:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = "".join(name.lower().split()[:-1])
+        self.type = "blade"
+
+    def _map_exceptions(self, wep):
+        if self.name == "samurai" and wep.name == "earthmaul":
+            return "orbitars"
+        else:
+            return None
     
     def map_fusion(self, wep):
-        match wep.lower():
+        # If fusion
+        res = self._map_exceptions(wep)
+        if res is not None:
+            return res
+
+        match wep.type:
             case "blade":
                 res = "claws"
             case "staff":
@@ -33,11 +45,12 @@ class Blade:
 
 
 class Staff:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = "".join(name.lower().split()[:-1])
+        self.type = "staff"
 
     def map_fusion(self, wep):
-        match wep.lower():
+        match wep.type:
             case "blade":
                 res = "claws"
             case "staff":
@@ -62,11 +75,12 @@ class Staff:
         
 
 class Claws:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = "".join(name.lower().split()[:-1])
+        self.type = "claws"
 
     def map_fusion(self, wep):
-        match wep.lower():
+        match wep.type:
             case "blade":
                 res = "club"
             case "staff":
@@ -91,11 +105,12 @@ class Claws:
 
 
 class Bow:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = "".join(name.lower().split()[:-1])
+        self.type = "bow"
 
     def map_fusion(self, wep):
-        match wep.lower():
+        match wep.type:
             case "blade":
                 res = "palm"
             case "staff":
@@ -120,11 +135,12 @@ class Bow:
 
 
 class Palm:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = "".join(name.lower().split()[:-1])
+        self.type = "palm"
 
     def map_fusion(self, wep):
-        match wep.lower():
+        match wep.type:
             case "blade":
                 res = "arm"
             case "staff":
@@ -149,11 +165,12 @@ class Palm:
 
 
 class Club:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = "".join(name.lower().split()[:-1])
+        self.type = "club"
 
     def map_fusion(self, wep):
-        match wep.lower():
+        match wep.type:
             case "blade":
                 res = "staff"
             case "staff":
@@ -178,11 +195,12 @@ class Club:
 
 
 class Cannon:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = "".join(name.lower().split()[:-1])
+        self.type = "cannon"
 
     def map_fusion(self, wep):
-        match wep.lower():
+        match wep.type:
             case "blade":
                 res = "staff"
             case "staff":
@@ -207,11 +225,12 @@ class Cannon:
 
 
 class Orbitars:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = "".join(name.lower().split()[:-1])
+        self.type = "orbitars"
 
     def map_fusion(self, wep):
-        match wep.lower():
+        match wep.type:
             case "blade":
                 res = "palm"
             case "staff":
@@ -236,11 +255,12 @@ class Orbitars:
 
 
 class Arm:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = "".join(name.lower().split()[:-1])
+        self.type = "arm"
 
     def map_fusion(self, wep):
-        match wep.lower():
+        match wep.type:
             case "blade":
                 res = "bow"
             case "staff":
