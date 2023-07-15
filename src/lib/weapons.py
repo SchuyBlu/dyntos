@@ -3,23 +3,132 @@ Author: Feanor
 Weapons objects containing relevant methods.
 """
 
-class Blade:
+class Weapon:
     def __init__(self, name):
-        self.name = "".join(name.lower().split()[:-1])
-        self.type = "blade"
+        self.valid_names = [
+            "first",
+            "burst",
+            "viper",
+            "crusader",
+            "royal",
+            "optical",
+            "samurai",
+            "bullet",
+            "aquarius",
+            "aurum",
+            "palutena",
+            "gaol",
+            "insight",
+            "orb",
+            "rose",
+            "knuckle",
+            "ancient",
+            "lancer",
+            "flintlock",
+            "somewhat",
+            "scorpio",
+            "laser",
+            "dark pit",
+            "thanatos",
+            "tiger",
+            "wolf",
+            "bear",
+            "brawler",
+            "stealth",
+            "hedgehog",
+            "raptor",
+            "artillery",
+            "cancer",
+            "beam",
+            "viridi",
+            "pandora",
+            "fortune",
+            "silver",
+            "meteor",
+            "divine",
+            "darkness",
+            "crystal",
+            "angel",
+            "hawkeye",
+            "sagittarius",
+            "palutena",
+            "phosphora",
+            "violet",
+            "burning",
+            "needle",
+            "midnight",
+            "cursed",
+            "cutter",
+            "pudgy",
+            "ninja",
+            "virgo",
+            "viridi",
+            "great reaper",
+            "ore",
+            "babel",
+            "skyscraper",
+            "atlas",
+            "earthmaul",
+            "ogre",
+            "halo",
+            "black",
+            "capricorn",
+            "aurum",
+            "hewdraw",
+            "magnus",
+            "ez",
+            "ball",
+            "predator",
+            "poseidon",
+            "fireworks",
+            "rail",
+            "dynamo",
+            "doom",
+            "leo",
+            "sonic",
+            "twinbellows",
+            "cragalanche",
+            "standard",
+            "guardian",
+            "shock",
+            "eyetrack",
+            "fairy",
+            "paw pad",
+            "jetstream",
+            "boom",
+            "gemini",
+            "aurum",
+            "centurion",
+            "arlon",
+            "crusher",
+            "compact",
+            "electroshock",
+            "volcano",
+            "drill",
+            "bomber",
+            "bowl",
+            "end-all",
+            "taurus",
+            "upperdash",
+            "kraken",
+            "phoenix"
+        ]
+        self.name = " ".join(name.lower().split()[:-1])
+        self.type = name.lower().split()[-1]
+        if not self.is_valid():
+            raise ValueError("Weapon name must exist")
 
-    def _map_exceptions(self, wep):
-        if self.name == "samurai" and wep.name == "earthmaul":
-            return "orbitars"
-        else:
-            return None
+    def is_valid(self):
+        if self.name in self.valid_names:
+            return True
+        return False
+
+
+class Blade(Weapon):
+    def __init__(self, name):
+        super().__init__(name)
     
     def map_fusion(self, wep):
-        # If fusion
-        res = self._map_exceptions(wep)
-        if res is not None:
-            return res
-
         match wep.type:
             case "blade":
                 res = "claws"
@@ -44,10 +153,9 @@ class Blade:
         return res
 
 
-class Staff:
+class Staff(Weapon):
     def __init__(self, name):
-        self.name = "".join(name.lower().split()[:-1])
-        self.type = "staff"
+        super().__init__(name)
 
     def map_fusion(self, wep):
         match wep.type:
@@ -74,10 +182,9 @@ class Staff:
         return res
         
 
-class Claws:
+class Claws(Weapon):
     def __init__(self, name):
-        self.name = "".join(name.lower().split()[:-1])
-        self.type = "claws"
+        super().__init__(name)
 
     def map_fusion(self, wep):
         match wep.type:
@@ -104,10 +211,9 @@ class Claws:
         return res
 
 
-class Bow:
+class Bow(Weapon):
     def __init__(self, name):
-        self.name = "".join(name.lower().split()[:-1])
-        self.type = "bow"
+        super().__init__(name)
 
     def map_fusion(self, wep):
         match wep.type:
@@ -134,10 +240,9 @@ class Bow:
         return res
 
 
-class Palm:
+class Palm(Weapon):
     def __init__(self, name):
-        self.name = "".join(name.lower().split()[:-1])
-        self.type = "palm"
+        super().__init__(name)
 
     def map_fusion(self, wep):
         match wep.type:
@@ -164,10 +269,9 @@ class Palm:
         return res
 
 
-class Club:
+class Club(Weapon):
     def __init__(self, name):
-        self.name = "".join(name.lower().split()[:-1])
-        self.type = "club"
+        super().__init__(name)
 
     def map_fusion(self, wep):
         match wep.type:
@@ -194,10 +298,9 @@ class Club:
         return res
 
 
-class Cannon:
+class Cannon(Weapon):
     def __init__(self, name):
-        self.name = "".join(name.lower().split()[:-1])
-        self.type = "cannon"
+        super().__init__(name)
 
     def map_fusion(self, wep):
         match wep.type:
@@ -224,10 +327,9 @@ class Cannon:
         return res
 
 
-class Orbitars:
+class Orbitars(Weapon):
     def __init__(self, name):
-        self.name = "".join(name.lower().split()[:-1])
-        self.type = "orbitars"
+        super().__init__(name)
 
     def map_fusion(self, wep):
         match wep.type:
@@ -254,10 +356,9 @@ class Orbitars:
         return res
 
 
-class Arm:
+class Arm(Weapon):
     def __init__(self, name):
-        self.name = "".join(name.lower().split()[:-1])
-        self.type = "arm"
+        super().__init__(name)
 
     def map_fusion(self, wep):
         match wep.type:

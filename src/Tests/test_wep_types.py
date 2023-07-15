@@ -8,10 +8,10 @@ from lib.weapons import *
 class TestWeapons(unittest.TestCase):
     def setUp(self):
         self.blade = Blade("First blade")
-        self.staff = Staff("Somewhat Staff")
+        self.staff = Staff("Dark PIT Staff")
         self.claws = Claws("Wolf Claws")
         self.bow = Bow("PALUTEna Bow")
-        self.palm = Palm("Midnight palm")
+        self.palm = Palm("Great Reaper palm")
         self.club = Club("Skyscraper Club")
         self.cannon = Cannon("Rail Cannon")
         self.orbitars = Orbitars("Standard Orbitars")
@@ -115,6 +115,14 @@ class TestWeapons(unittest.TestCase):
         self.assertEqual(self.arm.map_fusion(Cannon("doom cannon")), "staff")
         self.assertEqual(self.arm.map_fusion(Orbitars("boom orbitars")), "palm")
         self.assertEqual(self.arm.map_fusion(Arm("volcano arm")), "bow")
+
+    def test_whenWeaponNameIsParsed_shouldCorrectlySplitTypeAndName(self):
+        self.assertEqual(self.staff.name, "dark pit")
+        self.assertEqual(self.palm.name, "great reaper")
+        self.assertEqual(self.blade.name, "first")
+
+    def test_whenInvalidWeaponNameIsGiven_shouldRaiseValueError(self):
+        self.assertRaises(ValueError, Blade, "invalid blade")
 
 
 if __name__ == "__main__":
