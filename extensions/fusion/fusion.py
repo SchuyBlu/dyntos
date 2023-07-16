@@ -13,7 +13,7 @@ async def fusion(ctx: lightbulb.Context):
     second = str_to_wep(ctx.options.second)
 
     res = first.fusion(second)
-    await ctx.respond(f"{str(first).title()} + {str(second).title()} = {str(res[0]).title()} in group {res[1]}")
+    await ctx.respond(f"{str(first).title()} + {str(second).title()} = {str(res[0]).title()} in Group {res[1]}")
 
 
 def load(bot: lightbulb.BotApp) -> None:

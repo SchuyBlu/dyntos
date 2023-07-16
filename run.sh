@@ -4,5 +4,5 @@
 shopt -s expand_aliases
 source ~/.bash_aliases
 
-python3 src/main.py
+python3 main.py
 

@@ -28,13 +28,17 @@ load_dotenv()
 TOKEN = str(getenv("TOKEN")) # convert to str as per lightbulb reqs
 
 extensions = [
-    "src/extensions/fusion",
+    "extensions/fusion",
 ]
 
 bot = lightbulb.BotApp(
     TOKEN, prefix = "$",
     intents = hikari.Intents.ALL,
-    help_class = None
+    help_class = None,
+    default_enabled_guilds = (
+        707504970777231381,
+        1004938319374860308,
+    )
 )
 
 for extension in extensions:
