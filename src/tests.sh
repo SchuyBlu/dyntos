@@ -6,4 +6,5 @@ source ~/.bash_aliases
 
 python3 -m Tests.test_wep_types
 python3 -m Tests.test_wep_ids
+python3 -m Tests.test_wep_fusion
 
