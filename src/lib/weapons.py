@@ -227,6 +227,8 @@ class Weapon:
             ):
                 ret = entry[2]
                 break
+        if ret:
+            return ret, self._retrieve_fusion_group(other)
         return ret
 
     def fusion(self, other):

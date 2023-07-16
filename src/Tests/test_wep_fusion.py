@@ -133,6 +133,20 @@ class TestWeapons(unittest.TestCase):
         self.assertEqual(self.arm.fusion(Orbitars("boom orbitars")), (Palm("great reaper palm"), 1))
         self.assertEqual(self.arm.fusion(Arm("volcano arm")), (Bow("hawkeye bow"), 2))
 
+    def test_givenFusesThatAreExceptions_thenReturnsCorrectWeapon(self):
+        # More cases to add
+        self.assertEqual(Blade("first blade").fusion(Orbitars("centurion orbitars")), (Bow("palutena bow"), 5))
+        self.assertEqual(Orbitars("centurion orbitars").fusion(Blade("first blade")), (Bow("palutena bow"), 5))
+        self.assertEqual(Blade("samurai blade").fusion(Club("earthmaul club")), (Orbitars("arlon orbitars"), 1))
+        self.assertEqual(Club("earthmaul club").fusion(Blade("samurai blade")), (Orbitars("arlon orbitars"), 1))
+        self.assertEqual(Staff("rose staff").fusion(Orbitars("eyetrack orbitars")), (Blade("samurai blade"), 1))
+        self.assertEqual(Orbitars("eyetrack orbitars").fusion(Staff("rose staff")), (Blade("samurai blade"), 1))
+        self.assertEqual(Staff("knuckle staff").fusion(Arm("end-all arm")), (Blade("gaol blade"), 1))
+        self.assertEqual(Arm("end-all arm").fusion(Staff("knuckle staff")), (Blade("gaol blade"), 1))
+        self.assertEqual(Staff("somewhat staff").fusion(Palm("virgo palm")), (Arm("upperdash arm"), 3))
+        self.assertEqual(Palm("virgo palm").fusion(Staff("somewhat staff")), (Arm("upperdash arm"), 3))
+
+
 if __name__ == "__main__":
     unittest.main()
 
