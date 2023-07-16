@@ -241,7 +241,7 @@ class Weapon:
 
         # Check for exception case
         ret = self._assign_from_table(other, rid)
-        return ret
+        return ret, group
 
 
 class Blade(Weapon):
