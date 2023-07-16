@@ -127,23 +127,37 @@ class Weapon:
             return True
         return False
 
+    def _init_weapon_by_offset(self, name, class_id, wep_id, offset):
+        if wep_id and not name:
+            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
+            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
+            self.id = wep_id
+        else:
+            self.id = self.WEAPONS.index(f"{str(self)}") - offset + 1
+        self.true_id = (self.CLASS_ID * 12) + self.id
+
 
 class Blade(Weapon):
     def __init__(self, name=None, wep_id=None):
         super().__init__(name)
         self.CLASS_ID = 0
         offset = self.CLASS_ID * 12 # Used to calculate weapon id in class
-
-        if wep_id and not name:
-            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
-            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
-        else:
-            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+        self._init_weapon_by_offset(name, self.CLASS_ID, wep_id, offset)
 
     def __str__(self):
         return f"{self.name} {self.type}"
 
+    def map_exceptions(self, wep):
+        res = None
+        if self.name == "samurai" and wep.name == "earthmaul":
+            res = "orbitars"
+        return res
+
     def map_fusion(self, wep):
+        # Check for exception case
+        res = self.map_exceptions(wep)
+        if res: return res
+
         match wep.type:
             case "blade":
                 res = "claws"
@@ -173,17 +187,25 @@ class Staff(Weapon):
         super().__init__(name)
         self.CLASS_ID = 1
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-
-        if wep_id and not name:
-            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
-            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
-        else:
-            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+        self._init_weapon_by_offset(name, self.CLASS_ID, wep_id, offset)
 
     def __str__(self):
         return f"{self.name} {self.type}"
 
+    def map_exceptions(self, wep):
+        res = None
+        active_pairing = f"{self.name}|{wep.name}"
+        blade_pairs = {"rose|eyetrack", "knuckle|end-all", "dark pit|fortune"}
+        if active_pairing in blade_pairs:
+            res = "blade"
+        if self.name == "somewhat" and wep.name == "virgo":
+            res = "arm"
+        return res
+
     def map_fusion(self, wep):
+        res = self.map_exceptions(wep)
+        if res: return res
+
         match wep.type:
             case "blade":
                 res = "claws"
@@ -213,17 +235,23 @@ class Claws(Weapon):
         super().__init__(name)
         self.CLASS_ID = 2
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-
-        if wep_id and not name:
-            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
-            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
-        else:
-            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+        self._init_weapon_by_offset(name, self.CLASS_ID, wep_id, offset)
 
     def __str__(self):
         return f"{self.name} {self.type}"
 
+    def map_exceptions(self, wep):
+        res = None
+        if self.name == "stealth" and wep.name == "violet":
+            res = "cannon"
+        if self.name == "hedgehog" and wep.name == "ogre":
+            res = "palm"
+        return res
+
     def map_fusion(self, wep):
+        res = self.map_exceptions(wep)
+        if res: return res
+
         match wep.type:
             case "blade":
                 res = "club"
@@ -253,17 +281,27 @@ class Bow(Weapon):
         super().__init__(name)
         self.CLASS_ID = 3
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-
-        if wep_id and not name:
-            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
-            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
-        else:
-            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+        self._init_weapon_by_offset(name, self.CLASS_ID, wep_id, offset)
 
     def __str__(self):
         return f"{self.name} {self.type}"
 
+    def map_exceptions(self, wep):
+        res = None
+        if self.name == "angel" and wep.name == "drill":
+            res = "orbitars"
+        if self.name == "fortune" and wep.name == "dark pit":
+            res = "blade"
+        if self.name == "angel" and wep.name == "phosphora":
+            res = "palm"
+        if self.name == "phosphora" and wep.name == "angel":
+            res = "palm"
+        return res
+
     def map_fusion(self, wep):
+        res = self.map_exceptions(wep)
+        if res: return res
+
         match wep.type:
             case "blade":
                 res = "palm"
@@ -293,17 +331,27 @@ class Palm(Weapon):
         super().__init__(name)
         self.CLASS_ID = 4
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-
-        if wep_id and not name:
-            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
-            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
-        else:
-            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+        self._init_weapon_by_offset(name, self.CLASS_ID, wep_id, offset)
 
     def __str__(self):
         return f"{self.name} {self.type}"
 
+    def map_exceptions(self, wep):
+        res = None
+        if self.name == "virgo" and wep.name == "somewhat":
+            res = "arm"
+        if self.name == "pudgy" and wep.name == "fireworks":
+            res = "arm"
+        if self.name == "violet" and wep.name == "stealth":
+            res = "cannon"
+        if self.name == "cursed" and wep.name == "ball":
+            res = "club"
+        return res
+
     def map_fusion(self, wep):
+        res = self.map_exceptions(wep)
+        if res: return res
+
         match wep.type:
             case "blade":
                 res = "arm"
@@ -333,17 +381,25 @@ class Club(Weapon):
         super().__init__(name)
         self.CLASS_ID = 5
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-
-        if wep_id and not name:
-            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
-            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
-        else:
-            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+        self._init_weapon_by_offset(name, self.CLASS_ID, wep_id, offset)
 
     def __str__(self):
         return f"{self.name} {self.type}"
 
+    def map_exceptions(self, wep):
+        res = None
+        if self.name == "earthmaul" and wep.name == "samurai":
+            res = "orbitars"
+        if self.name == "ogre" and wep.name == "hedgehog":
+            res = "palm"
+        if self.name == "ogre" and wep.name == "rail":
+            res = "staff"
+        return res
+
     def map_fusion(self, wep):
+        res = self.map_exceptions(wep)
+        if res: return res
+
         match wep.type:
             case "blade":
                 res = "staff"
@@ -373,17 +429,25 @@ class Cannon(Weapon):
         super().__init__(name)
         self.CLASS_ID = 6
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-
-        if wep_id and not name:
-            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
-            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
-        else:
-            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+        self._init_weapon_by_offset(name, self.CLASS_ID, wep_id, offset)
 
     def __str__(self):
         return f"{self.name} {self.type}"
 
+    def map_exceptions(self, wep):
+        res = None
+        if self.name == "fireworks" and wep.name == "pudgy":
+            res = "arm"
+        if self.name == "ball" and wep.name == "cursed":
+            res = "club"
+        if self.name == "rail" and wep.name == "ogre":
+            res = "staff"
+        return res
+
     def map_fusion(self, wep):
+        res = self.map_exceptions(wep)
+        if res: return res
+
         match wep.type:
             case "blade":
                 res = "staff"
@@ -413,17 +477,23 @@ class Orbitars(Weapon):
         super().__init__(name)
         self.CLASS_ID = 7
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-
-        if wep_id and not name:
-            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
-            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
-        else:
-            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+        self._init_weapon_by_offset(name, self.CLASS_ID, wep_id, offset)
 
     def __str__(self):
         return f"{self.name} {self.type}"
 
+    def map_exceptions(self, wep):
+        res = None
+        if self.name == "eyetrack" and wep.name == "rose":
+            res = "blade"
+        if self.name == "shock" and wep.name == "volcano":
+            res = "cannon"
+        return res
+
     def map_fusion(self, wep):
+        res = self.map_exceptions(wep)
+        if res: return res
+
         match wep.type:
             case "blade":
                 res = "palm"
@@ -453,17 +523,25 @@ class Arm(Weapon):
         super().__init__(name)
         self.CLASS_ID = 8
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-
-        if wep_id and not name:
-            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
-            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
-        else:
-            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+        self._init_weapon_by_offset(name, self.CLASS_ID, wep_id, offset)
 
     def __str__(self):
         return f"{self.name} {self.type}"
 
+    def map_exceptions(self, wep):
+        res = None
+        if self.name == "drill" and wep.name == "angel":
+            res = "orbitars"
+        if self.name == "end-all" and wep.name == "knuckle":
+            res = "blade"
+        if self.name == "volcano" and wep.name == "shock":
+            res = "cannon"
+        return res
+
     def map_fusion(self, wep):
+        res = self.map_exceptions(wep)
+        if res: return res
+
         match wep.type:
             case "blade":
                 res = "bow"

@@ -116,6 +116,34 @@ class TestWeapons(unittest.TestCase):
         self.assertEqual(self.arm.map_fusion(Orbitars("boom orbitars")), "palm")
         self.assertEqual(self.arm.map_fusion(Arm("volcano arm")), "bow")
 
+    def test_givenExceptionFusion_thenCorrectlyOutputsException(self):
+        self.assertEqual(Blade("samurai blade").map_fusion(Club("earthmaul club")), "orbitars")
+        self.assertEqual(Club("earthmaul club").map_fusion(Blade("samurai blade")), "orbitars")
+        self.assertEqual(Bow("angel bow").map_fusion(Arm("drill arm")), "orbitars")
+        self.assertEqual(Arm("drill arm").map_fusion(Bow("angel bow")), "orbitars")
+        self.assertEqual(Staff("rose staff").map_fusion(Orbitars(wep_id=4)), "blade")
+        self.assertEqual(Orbitars("eyetrack orbitars").map_fusion(Staff("rose staff")), "blade")
+        self.assertEqual(Staff("knuckle staff").map_fusion(Arm("end-all arm")), "blade")
+        self.assertEqual(Arm("end-all arm").map_fusion(Staff("knuckle staff")), "blade")
+        self.assertEqual(Staff("dark pit staff").map_fusion(Bow("fortune bow")), "blade")
+        self.assertEqual(Bow("fortune bow").map_fusion(Staff("dark pit staff")), "blade")
+        self.assertEqual(Staff("somewhat staff").map_fusion(Palm("virgo palm")), "arm")
+        self.assertEqual(Palm("virgo palm").map_fusion(Staff("somewhat staff")), "arm")
+        self.assertEqual(Palm("pudgy palm").map_fusion(Cannon("fireworks cannon")), "arm")
+        self.assertEqual(Cannon("fireworks cannon").map_fusion(Palm("pudgy palm")), "arm")
+        self.assertEqual(Claws("stealth claws").map_fusion(Palm("violet palm")), "cannon")
+        self.assertEqual(Palm("violet palm").map_fusion(Claws("stealth claws")), "cannon")
+        self.assertEqual(Orbitars("shock orbitars").map_fusion(Arm("volcano arm")), "cannon")
+        self.assertEqual(Arm("volcano arm").map_fusion(Orbitars("shock orbitars")), "cannon")
+        self.assertEqual(Claws("hedgehog claws").map_fusion(Club("ogre club")), "palm")
+        self.assertEqual(Club("ogre club").map_fusion(Claws("hedgehog claws")), "palm")
+        self.assertEqual(Bow("angel bow").map_fusion(Bow("phosphora bow")), "palm")
+        self.assertEqual(Bow("phosphora bow").map_fusion(Bow("angel bow")), "palm")
+        self.assertEqual(Palm("cursed palm").map_fusion(Cannon("ball cannon")), "club")
+        self.assertEqual(Cannon("ball cannon").map_fusion(Palm("cursed palm")), "club")
+        self.assertEqual(Club("ogre club").map_fusion(Cannon("rail cannon")), "staff")
+        self.assertEqual(Cannon("rail cannon").map_fusion(Club("ogre club")), "staff")
+
     def test_whenWeaponNameIsParsed_shouldCorrectlySplitTypeAndName(self):
         self.assertEqual(self.staff.name, "dark pit")
         self.assertEqual(self.palm.name, "great reaper")
@@ -127,3 +155,4 @@ class TestWeapons(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
