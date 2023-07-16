@@ -4,7 +4,7 @@ Weapons objects containing relevant methods.
 """
 
 class Weapon:
-    def __init__(self, name):
+    def __init__(self, name=None):
         self.WEAPONS = [
             "first blade",
             "burst blade",
@@ -116,10 +116,11 @@ class Weapon:
             "phoenix arm"
         ]
 
-        if not self._valid(name):
-            raise ValueError("Weapon must exist")
-        self.name = " ".join(name.lower().split()[:-1])
-        self.type = name.lower().split()[-1]
+        if name:
+            self.name = " ".join(name.lower().split()[:-1])
+            self.type = name.lower().split()[-1]
+            if not self._valid(name):
+                raise ValueError("Weapon must exist")
 
     def _valid(self, name):
         if name.lower() in self.WEAPONS:
@@ -128,11 +129,19 @@ class Weapon:
 
 
 class Blade(Weapon):
-    def __init__(self, name):
+    def __init__(self, name=None, wep_id=None):
         super().__init__(name)
         self.CLASS_ID = 0
-        offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+        offset = self.CLASS_ID * 12 # Used to calculate weapon id in class
+
+        if wep_id and not name:
+            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
+            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
+        else:
+            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+    def __str__(self):
+        return f"{self.name} {self.type}"
 
     def map_fusion(self, wep):
         match wep.type:
@@ -160,11 +169,19 @@ class Blade(Weapon):
 
 
 class Staff(Weapon):
-    def __init__(self, name):
+    def __init__(self, name=None, wep_id=None):
         super().__init__(name)
         self.CLASS_ID = 1
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+        if wep_id and not name:
+            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
+            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
+        else:
+            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+    def __str__(self):
+        return f"{self.name} {self.type}"
 
     def map_fusion(self, wep):
         match wep.type:
@@ -192,11 +209,19 @@ class Staff(Weapon):
 
 
 class Claws(Weapon):
-    def __init__(self, name):
+    def __init__(self, name=None, wep_id=None):
         super().__init__(name)
         self.CLASS_ID = 2
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+        if wep_id and not name:
+            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
+            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
+        else:
+            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+    def __str__(self):
+        return f"{self.name} {self.type}"
 
     def map_fusion(self, wep):
         match wep.type:
@@ -224,11 +249,19 @@ class Claws(Weapon):
 
 
 class Bow(Weapon):
-    def __init__(self, name):
+    def __init__(self, name=None, wep_id=None):
         super().__init__(name)
         self.CLASS_ID = 3
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+        if wep_id and not name:
+            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
+            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
+        else:
+            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+    def __str__(self):
+        return f"{self.name} {self.type}"
 
     def map_fusion(self, wep):
         match wep.type:
@@ -256,11 +289,19 @@ class Bow(Weapon):
 
 
 class Palm(Weapon):
-    def __init__(self, name):
+    def __init__(self, name=None, wep_id=None):
         super().__init__(name)
         self.CLASS_ID = 4
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+        if wep_id and not name:
+            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
+            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
+        else:
+            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+    def __str__(self):
+        return f"{self.name} {self.type}"
 
     def map_fusion(self, wep):
         match wep.type:
@@ -288,11 +329,19 @@ class Palm(Weapon):
 
 
 class Club(Weapon):
-    def __init__(self, name):
+    def __init__(self, name=None, wep_id=None):
         super().__init__(name)
         self.CLASS_ID = 5
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+        if wep_id and not name:
+            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
+            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
+        else:
+            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+    def __str__(self):
+        return f"{self.name} {self.type}"
 
     def map_fusion(self, wep):
         match wep.type:
@@ -320,11 +369,19 @@ class Club(Weapon):
 
 
 class Cannon(Weapon):
-    def __init__(self, name):
+    def __init__(self, name=None, wep_id=None):
         super().__init__(name)
         self.CLASS_ID = 6
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+        if wep_id and not name:
+            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
+            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
+        else:
+            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+    def __str__(self):
+        return f"{self.name} {self.type}"
 
     def map_fusion(self, wep):
         match wep.type:
@@ -352,11 +409,19 @@ class Cannon(Weapon):
 
 
 class Orbitars(Weapon):
-    def __init__(self, name):
+    def __init__(self, name=None, wep_id=None):
         super().__init__(name)
         self.CLASS_ID = 7
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+        if wep_id and not name:
+            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
+            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
+        else:
+            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+    def __str__(self):
+        return f"{self.name} {self.type}"
 
     def map_fusion(self, wep):
         match wep.type:
@@ -384,11 +449,19 @@ class Orbitars(Weapon):
 
 
 class Arm(Weapon):
-    def __init__(self, name):
+    def __init__(self, name=None, wep_id=None):
         super().__init__(name)
         self.CLASS_ID = 8
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+        if wep_id and not name:
+            self.name = " ".join(self.WEAPONS[offset + wep_id - 1].split()[:-1])
+            self.type = self.WEAPONS[offset + wep_id - 1].split()[-1]
+        else:
+            self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
+
+    def __str__(self):
+        return f"{self.name} {self.type}"
 
     def map_fusion(self, wep):
         match wep.type:
