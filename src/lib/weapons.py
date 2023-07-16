@@ -6,122 +6,123 @@ Weapons objects containing relevant methods.
 class Weapon:
     def __init__(self, name):
         self.WEAPONS = [
-            "first",
-            "burst",
-            "viper",
-            "crusader",
-            "royal",
-            "optical",
-            "samurai",
-            "bullet",
-            "aquarius",
-            "aurum",
-            "palutena",
-            "gaol",
-            "insight",
-            "orb",
-            "rose",
-            "knuckle",
-            "ancient",
-            "lancer",
-            "flintlock",
-            "somewhat",
-            "scorpio",
-            "laser",
-            "dark pit",
-            "thanatos",
-            "tiger",
-            "wolf",
-            "bear",
-            "brawler",
-            "stealth",
-            "hedgehog",
-            "raptor",
-            "artillery",
-            "cancer",
-            "beam",
-            "viridi",
-            "pandora",
-            "fortune",
-            "silver",
-            "meteor",
-            "divine",
-            "darkness",
-            "crystal",
-            "angel",
-            "hawkeye",
-            "sagittarius",
-            "aurum",
-            "palutena",
-            "phosphora",
-            "violet",
-            "burning",
-            "needle",
-            "midnight",
-            "cursed",
-            "cutter",
-            "pudgy",
-            "ninja",
-            "virgo",
-            "aurum",
-            "viridi",
-            "great reaper",
-            "ore",
-            "babel",
-            "skyscraper",
-            "atlas",
-            "earthmaul",
-            "ogre",
-            "halo",
-            "black",
-            "capricorn",
-            "aurum",
-            "hewdraw",
-            "magnus",
-            "ez",
-            "ball",
-            "predator",
-            "poseidon",
-            "fireworks",
-            "rail",
-            "dynamo",
-            "doom",
-            "leo",
-            "sonic",
-            "twinbellows",
-            "cragalanche",
-            "standard",
-            "guardian",
-            "shock",
-            "eyetrack",
-            "fairy",
-            "paw pad",
-            "jetstream",
-            "boom",
-            "gemini",
-            "aurum",
-            "centurion",
-            "arlon",
-            "crusher",
-            "compact",
-            "electroshock",
-            "volcano",
-            "drill",
-            "bomber",
-            "bowl",
-            "end-all",
-            "taurus",
-            "upperdash",
-            "kraken",
-            "phoenix"
+            "first blade",
+            "burst blade",
+            "viper blade",
+            "crusader blade",
+            "royal blade",
+            "optical blade",
+            "samurai blade",
+            "bullet blade",
+            "aquarius blade",
+            "aurum blade",
+            "palutena blade",
+            "gaol blade",
+            "insight staff",
+            "orb staff",
+            "rose staff",
+            "knuckle staff",
+            "ancient staff",
+            "lancer staff",
+            "flintlock staff",
+            "somewhat staff",
+            "scorpio staff",
+            "laser staff",
+            "dark pit staff",
+            "thanatos staff",
+            "tiger claws",
+            "wolf claws",
+            "bear claws",
+            "brawler claws",
+            "stealth claws",
+            "hedgehog claws",
+            "raptor claws",
+            "artillery claws",
+            "cancer claws",
+            "beam claws",
+            "viridi claws",
+            "pandora claws",
+            "fortune bow",
+            "silver bow",
+            "meteor bow",
+            "divine bow",
+            "darkness bow",
+            "crystal bow",
+            "angel bow",
+            "hawkeye bow",
+            "sagittarius bow",
+            "aurum bow",
+            "palutena bow",
+            "phosphora bow",
+            "violet palm",
+            "burning palm",
+            "needle palm",
+            "midnight palm",
+            "cursed palm",
+            "cutter palm",
+            "pudgy palm",
+            "ninja palm",
+            "virgo palm",
+            "aurum palm",
+            "viridi palm",
+            "great reaper palm",
+            "ore club",
+            "babel club",
+            "skyscraper club",
+            "atlas club",
+            "earthmaul club",
+            "ogre club",
+            "halo club",
+            "black club",
+            "capricorn club",
+            "aurum club",
+            "hewdraw club",
+            "magnus club",
+            "ez cannon",
+            "ball cannon",
+            "predator cannon",
+            "poseidon cannon",
+            "fireworks cannon",
+            "rail cannon",
+            "dynamo cannon",
+            "doom cannon",
+            "leo cannon",
+            "sonic cannon",
+            "twinbellows cannon",
+            "cragalanche cannon",
+            "standard orbitars",
+            "guardian orbitars",
+            "shock orbitars",
+            "eyetrack orbitars",
+            "fairy orbitars",
+            "paw pad orbitars",
+            "jetstream orbitars",
+            "boom orbitars",
+            "gemini orbitars",
+            "aurum orbitars",
+            "centurion orbitars",
+            "arlon orbitars",
+            "crusher arm",
+            "compact arm",
+            "electroshock arm",
+            "volcano arm",
+            "drill arm",
+            "bomber arm",
+            "bowl arm",
+            "end-all arm",
+            "taurus arm",
+            "upperdash arm",
+            "kraken arm",
+            "phoenix arm"
         ]
+
+        if not self._valid(name):
+            raise ValueError("Weapon must exist")
         self.name = " ".join(name.lower().split()[:-1])
         self.type = name.lower().split()[-1]
-        if not self.is_valid():
-            raise ValueError("Weapon name must exist")
 
-    def is_valid(self):
-        if self.name in self.WEAPONS:
+    def _valid(self, name):
+        if name.lower() in self.WEAPONS:
             return True
         return False
 
@@ -131,7 +132,7 @@ class Blade(Weapon):
         super().__init__(name)
         self.CLASS_ID = 0
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.weapon_id = self.WEAPONS.index(self.name) - offset + 1
+        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
 
     def map_fusion(self, wep):
         match wep.type:
@@ -163,7 +164,7 @@ class Staff(Weapon):
         super().__init__(name)
         self.CLASS_ID = 1
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.weapon_id = self.WEAPONS.index(self.name) - offset + 1
+        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
 
     def map_fusion(self, wep):
         match wep.type:
@@ -195,7 +196,7 @@ class Claws(Weapon):
         super().__init__(name)
         self.CLASS_ID = 2
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.weapon_id = self.WEAPONS.index(self.name) - offset + 1
+        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
 
     def map_fusion(self, wep):
         match wep.type:
@@ -227,7 +228,7 @@ class Bow(Weapon):
         super().__init__(name)
         self.CLASS_ID = 3
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.weapon_id = self.WEAPONS.index(self.name) - offset + 1
+        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
 
     def map_fusion(self, wep):
         match wep.type:
@@ -259,7 +260,7 @@ class Palm(Weapon):
         super().__init__(name)
         self.CLASS_ID = 4
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.weapon_id = self.WEAPONS.index(self.name) - offset + 1
+        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
 
     def map_fusion(self, wep):
         match wep.type:
@@ -291,7 +292,7 @@ class Club(Weapon):
         super().__init__(name)
         self.CLASS_ID = 5
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.weapon_id = self.WEAPONS.index(self.name) - offset + 1
+        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
 
     def map_fusion(self, wep):
         match wep.type:
@@ -323,7 +324,7 @@ class Cannon(Weapon):
         super().__init__(name)
         self.CLASS_ID = 6
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.weapon_id = self.WEAPONS.index(self.name) - offset + 1
+        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
 
     def map_fusion(self, wep):
         match wep.type:
@@ -355,7 +356,7 @@ class Orbitars(Weapon):
         super().__init__(name)
         self.CLASS_ID = 7
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.weapon_id = self.WEAPONS.index(self.name) - offset + 1
+        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
 
     def map_fusion(self, wep):
         match wep.type:
@@ -387,7 +388,7 @@ class Arm(Weapon):
         super().__init__(name)
         self.CLASS_ID = 8
         offset = self.CLASS_ID * 12 # Used to calculate weapon id within class
-        self.weapon_id = self.WEAPONS.index(self.name) - offset + 1
+        self.id = self.WEAPONS.index(f"{self.name} {self.type}") - offset + 1
 
     def map_fusion(self, wep):
         match wep.type:
