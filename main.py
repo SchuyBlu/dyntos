@@ -27,12 +27,18 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = str(getenv("TOKEN")) # convert to str as per lightbulb reqs
 
+extensions = [
+    "src/extensions/fusion",
+]
+
 bot = lightbulb.BotApp(
     TOKEN, prefix = "$",
     intents = hikari.Intents.ALL,
     help_class = None
 )
 
+for extension in extensions:
+    bot.load_extensions_from(extension, must_exist=True)
 bot.run(
     activity = hikari.Activity(name = "/help or $help")
 )

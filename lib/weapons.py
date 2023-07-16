@@ -316,3 +316,18 @@ class Arm(Weapon):
         offset = self.cid * 12 # Used to calculate weapon id within class
         self._init_weapon_by_offset(name, self.cid, wid, offset)
 
+
+def str_to_wep(string):
+    ret = None
+    match string.split()[-1].lower():
+        case "blade": ret = Blade(string)
+        case "staff": ret = Staff(string)
+        case "claws": ret = Claws(string)
+        case "bow": ret = Bow(string)
+        case "palm": ret = Palm(string)
+        case "club": ret = Club(string)
+        case "cannon": ret = Cannon(string)
+        case "orbitars": ret = Orbitars(string)
+        case "arm": ret = Arm(string)
+    return ret
+
