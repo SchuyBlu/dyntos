@@ -329,5 +329,8 @@ def str_to_wep(string):
         case "cannon": ret = Cannon(string)
         case "orbitars": ret = Orbitars(string)
         case "arm": ret = Arm(string)
+    # Raise value error if weapon does not exist
+    if not ret:
+        raise ValueError("Weapon must exist.")
     return ret
 

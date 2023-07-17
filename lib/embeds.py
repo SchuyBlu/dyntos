@@ -19,31 +19,41 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-import lightbulb
-from lib.embeds import fusion_embed
-from lib.weapons import *
+import hikari
+import json
 
-fusion_plugin = lightbulb.Plugin("fusion", "Shows the result of a fusion")
+def fusion_embed(first, second, result, group):
+    with open("data/weapon_images.json") as data:
+        weapon_images = json.load(data)
+    image = weapon_images[str(result)]
 
-@fusion_plugin.command()
-@lightbulb.option("second", "The second weapon in the fusion", str, required=True)
-@lightbulb.option("first", "The first weapon in the fusion", str, required=True)
-@lightbulb.command("fusion", "Displays the result of a fusion.")
-@lightbulb.implements(lightbulb.SlashCommand)
-async def fusion(ctx: lightbulb.Context):
-    try:
-        first = str_to_wep(ctx.options.first)
-        second = str_to_wep(ctx.options.second)
-    except ValueError:
-        await ctx.respond("Please enter a valid weapon.")
-        return
-
-    res, group = first.fusion(second)
-
-    embed = fusion_embed(first, second, res, group)
-    await ctx.respond(embed)
-
-
-def load(bot: lightbulb.BotApp) -> None:
-    bot.add_plugin(fusion_plugin)
+    new_embed = (
+        hikari.Embed(
+            title = ":sparkles: Weapon Fusion Result :sparkles:",
+            description = "Listed below are the fusion results.",
+            color = hikari.Color(0x7D00FF),
+        )
+        .set_image(image)
+        .add_field(
+            name = "Weapon 1",
+            value = f"{str(first).title()}",
+            inline = True,
+        )
+        .add_field(
+            name = "Weapon 2",
+            value = f"{str(second).title()}",
+            inline = True,
+        )
+        .add_field(
+            name = "Result",
+            value = f"{str(result).title()}",
+            inline = False,
+        )
+        .add_field(
+            name = "Fusion Group",
+            value = f"Group {group}",
+            inline = False,
+        )
+    )
+    return new_embed
 
