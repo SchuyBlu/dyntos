@@ -241,7 +241,8 @@ class Weapon:
         ret = self._assign_from_exception_table(other)
         if ret: return ret
 
-        # Check for exception case
+        # Assign weapon following normal procedure if fusion isn't in
+        # exception table
         ret = self._assign_from_table(other, rid)
         return ret, group
 
