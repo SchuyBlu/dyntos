@@ -22,13 +22,14 @@
 import lightbulb
 from lib.embeds import fusion_embed
 from lib.weapons import *
+from lib.fuse_results import str_to_wep
 
 fusion_plugin = lightbulb.Plugin("fusion", "Shows the result of a fusion")
 
 @fusion_plugin.command()
 @lightbulb.option("second", "The second weapon in the fusion", str, required=True)
 @lightbulb.option("first", "The first weapon in the fusion", str, required=True)
-@lightbulb.command("fusion", "Displays the result of a fusion.")
+@lightbulb.command("fusion", "Displays the result of a fusion.", auto_defer=True)
 @lightbulb.implements(lightbulb.SlashCommand)
 async def fusion(ctx: lightbulb.Context):
     try:

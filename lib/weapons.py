@@ -318,20 +318,3 @@ class Arm(Weapon):
         self._init_weapon_by_offset(name, self.cid, wid, offset)
 
 
-def str_to_wep(string):
-    ret = None
-    match string.split()[-1].lower():
-        case "blade": ret = Blade(string)
-        case "staff": ret = Staff(string)
-        case "claws": ret = Claws(string)
-        case "bow": ret = Bow(string)
-        case "palm": ret = Palm(string)
-        case "club": ret = Club(string)
-        case "cannon": ret = Cannon(string)
-        case "orbitars": ret = Orbitars(string)
-        case "arm": ret = Arm(string)
-    # Raise value error if weapon does not exist
-    if not ret:
-        raise ValueError("Weapon must exist.")
-    return ret
-
