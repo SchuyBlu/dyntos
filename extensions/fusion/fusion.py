@@ -19,12 +19,17 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-import lightbulb
+import re
+import json
+import math
 import hikari
-from lightbulb.utils import pag, nav
-from lib.embeds import fusion_embed, construct_pages, run_paginated_embed
+import lightbulb
 from lib.weapons import *
+from lib.consts import regex_map
+from lightbulb.utils import pag, nav
 from lib.fuse_results import str_to_wep, fuse_by_result, fuse_from_comb
+from lib.embeds import fusion_embed, construct_pages, run_paginated_embed, calc_embed
+
 
 fusion_plugin = lightbulb.Plugin("fusion", "Shows the result of a fusion")
 
@@ -113,6 +118,69 @@ async def search(ctx: lightbulb.Context):
 
     else:
         await ctx.respond("Cannot search by weapon only.")
+
+
+@fusion_plugin.command()
+@lightbulb.option("mod6", "Sixth modifier.", str, required=False)
+@lightbulb.option("mod5", "Fifth modifier.", str, required=False)
+@lightbulb.option("mod4", "fourth modifier.", str, required=False)
+@lightbulb.option("mod3", "Third modifier.", str, required=False)
+@lightbulb.option("mod2", "Second modifier.", str, required=False)
+@lightbulb.option("mod1", "First modifier.", str, required=False)
+@lightbulb.option("melee", "Melee stars.", str, required=False)
+@lightbulb.option("ranged", "Ranged stars.", str, required=False)
+@lightbulb.option("weapon", "Weapon name.", str, required=True)
+@lightbulb.command("calc", "Calculator to determine weapon value.", auto_defer=True)
+@lightbulb.implements(lightbulb.SlashCommand)
+async def calc(ctx: lightbulb.Context):
+    name = ctx.options.weapon
+
+    modlist = [
+        ctx.options.mod1,
+        ctx.options.mod2,
+        ctx.options.mod3,
+        ctx.options.mod4,
+        ctx.options.mod5,
+        ctx.options.mod6
+    ]
+
+    value = 100
+    ranged = "0.0" if not ctx.options.ranged else str(float(ctx.options.ranged))
+    melee = "0.0" if not ctx.options.melee else str(float(ctx.options.melee))
+
+    with open("data/star_data.json") as data:
+        star_data = json.load(data)
+
+    value += star_data["ranged"][ranged]
+
+    whole_star, half_star = ranged.split(".")
+    ranged_stars = "\u2605" * int(whole_star)
+    if int(half_star):
+        ranged_stars += "\u2606"
+    whole_star, half_star = melee.split(".")
+    melee_stars = "\u2605" * int(whole_star)
+    if int(half_star):
+        melee_stars += "\u2606"
+
+    with open("data/mod_data.json") as data:
+        mod_data = json.load(data)
+
+    mods = []
+    for mod in modlist:
+        if mod:
+            mod_name, mod_attr = mod[:-2].lower().strip(), mod[-2:].strip()
+            for mod in regex_map:
+                mod_name = mod[1] if re.match(mod[0], mod_name) else mod_name
+            value += mod_data[mod_name][mod_attr]
+
+            mods.append(f"{mod_name.title()} {mod_attr}")
+    mods = "\n".join(mods)
+
+    value = str(math.floor(value))
+    embed = calc_embed(name, ranged_stars, melee_stars, mods, value)
+
+    await ctx.respond(embed)
+
 
 def load(bot: lightbulb.BotApp) -> None:
     bot.add_plugin(fusion_plugin)

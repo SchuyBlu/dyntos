@@ -21,6 +21,7 @@
 # SOFTWARE.
 import hikari
 from lightbulb.utils import pag, nav
+from lib.fuse_results import str_to_wep
 import json
 
 def fusion_embed(first, second, result, group):
@@ -108,4 +109,41 @@ async def run_paginated_embed(ctx, message, title):
             paginated_message.add_line(line)
     navigator = nav.ReactionNavigator(paginated_message.build_pages())
     await navigator.run(ctx)
+
+
+def calc_embed(name, ranged, melee, mods, value):
+    if value == "100":
+        return "That's a 100 value weapon."
+
+    embed = (
+        hikari.Embed(
+            title = f":sparkles: {name.title()} :sparkles:",
+            description = "Listed below are the value calculator results.",
+            color = hikari.Color(0x7D00FF),
+        )
+        .add_field(
+            name = "Value",
+            value = value
+        )
+        .add_field(
+            name = "Stars",
+            value = f"Ranged: {ranged}\nMelee: {melee}",
+        )
+    )
+    if mods:
+        embed.add_field(
+            name = "Modifiers",
+            value = mods
+        )
+
+    if name:
+        weapon = str_to_wep(name)
+
+        with open("data/weapon_images.json") as data:
+            weapon_images = json.load(data)
+
+        img = weapon_images[str(weapon)]
+        embed.set_image(img)
+
+    return embed
 

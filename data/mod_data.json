@@ -1,12 +1,12 @@
 {
-    "bakward-dash ch. shot" : {
+    "bkwd-dash ch. shot" : {
         "+1" : 10.6,
         "+2" : 17.9,
         "+3" : 25.2,
         "+4" : 32.6
     },
 
-    "backward-dash cont. fire" : {
+    "bkwd-dash cont. fire" : {
         "+1" : 8.6,
         "+2" : 14.2,
         "+3" : 19.7,
