@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import hikari
+from lightbulb.utils import pag, nav
 import json
 
 def fusion_embed(first, second, result, group):
@@ -56,4 +57,55 @@ def fusion_embed(first, second, result, group):
         )
     )
     return new_embed
+
+
+def construct_string(fusion):
+    wep_str = f"**Weapons**: {str(fusion[0]).title()} + {str(fusion[1]).title()}\n"
+    res_str = f"**Results**: {str(fusion[2]).title()}\n"
+    grp_str = f"**Fusion Group**: {fusion[3]}\n"
+    string = wep_str + res_str + grp_str
+    return string
+
+
+def construct_pages(res):
+    pages = []
+    page = []
+    count = 0
+    for fusion in res:
+        string = construct_string(fusion)
+        page.append(string)
+        if count == 4:
+            pages.append(page)
+            page = []
+            count = 0
+        count += 1
+    pages.append(page)
+    return pages
+
+
+async def run_paginated_embed(ctx, message, title):
+    paginated_message = pag.EmbedPaginator(max_lines=20)
+
+    # If the message len is one, the fusion is impossible.
+    if len(message) == 1:
+        await ctx.respond("There are no results for that fusion.")
+        return
+
+    @paginated_message.embed_factory()
+    def build_embed(page_index, page_content):
+        embed = (
+            hikari.Embed(
+                title = title,
+                description = page_content,
+                color = hikari.Color(0x7D00FF),
+            )
+            .set_footer(f"Page {page_index}")
+        )
+        return embed
+
+    for page in message:
+        for line in page:
+            paginated_message.add_line(line)
+    navigator = nav.ReactionNavigator(paginated_message.build_pages())
+    await navigator.run(ctx)
 

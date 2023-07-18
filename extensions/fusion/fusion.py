@@ -20,9 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import lightbulb
-from lib.embeds import fusion_embed
+import hikari
+from lightbulb.utils import pag, nav
+from lib.embeds import fusion_embed, construct_pages, run_paginated_embed
 from lib.weapons import *
-from lib.fuse_results import str_to_wep
+from lib.fuse_results import str_to_wep, fuse_by_result, fuse_from_comb
 
 fusion_plugin = lightbulb.Plugin("fusion", "Shows the result of a fusion")
 
@@ -44,6 +46,73 @@ async def fusion(ctx: lightbulb.Context):
     embed = fusion_embed(first, second, res, group)
     await ctx.respond(embed)
 
+
+@fusion_plugin.command()
+@lightbulb.option("weapon", "One weapon in the fusion.", str, required=False)
+@lightbulb.option("result", "The result of the fusion.", str, required=False)
+@lightbulb.option("group", "The group of the resulting fusion.", str, required=False)
+@lightbulb.command("search", "Displays possible fusions depending on the input given.", auto_defer=True)
+@lightbulb.implements(lightbulb.SlashCommand)
+async def search(ctx: lightbulb.Context):
+    weapon = ctx.options.weapon
+    result = ctx.options.result
+    group = ctx.options.group
+
+    try:
+        if weapon: weapon = str_to_wep(weapon)
+        if result: result = str_to_wep(result)
+    except ValueError:
+        await ctx.respond("Please enter a valid weapon or result")
+
+    if group:
+        try:
+            group = int(group)
+            if 1 > group > 5:
+                raise ValueError
+        except:
+            await ctx.respond("Please enter a valid fusion group.")
+
+    if (weapon and result) and not group:
+        res_list = []
+        fuse_from_comb(weapon, result, res_list)
+        message = construct_pages(res_list)
+        await run_paginated_embed(ctx, message, ":sparkles: Search by Weapon and Result :sparkles:")
+        return
+
+    elif (weapon and group) and not result:
+        res_list = []
+        fuse_from_comb(weapon, group, res_list)
+        message = construct_pages(res_list)
+        await run_paginated_embed(ctx, message, ":sparkles: Search by Weapon and Group :sparkles:")
+        return
+
+    elif weapon and not (result and group):
+        res_list = []
+        fuse_from_comb(weapon, None, res_list)
+        message = construct_pages(res_list)
+        await run_paginated_embed(ctx, message, ":sparkles: Search by Weapon :sparkles:")
+        return
+
+    elif result and not (weapon and group):
+        results = fuse_by_result(result)
+        message = construct_pages(results)
+        await run_paginated_embed(ctx, message, ":sparkles: Search by Result :sparkles:")
+        return
+
+    elif (result and group) and not weapon:
+        results = fuse_by_result(result, group=group)
+        message = construct_pages(results)
+        await run_paginated_embed(ctx, message, ":sparkles: Search by Result and Group :sparkles:")
+        return
+
+    elif group and not (weapon and result):
+        results = fuse_by_result(group)
+        message = construct_pages(results)
+        await run_paginated_embed(ctx, message, ":sparkles: Search by Group :sparkles:")
+        return
+
+    else:
+        await ctx.respond("Cannot search by weapon only.")
 
 def load(bot: lightbulb.BotApp) -> None:
     bot.add_plugin(fusion_plugin)
