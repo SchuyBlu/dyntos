@@ -31,7 +31,7 @@ from lib.fuse_results import str_to_wep, fuse_by_result, fuse_from_comb
 from lib.embeds import fusion_embed, construct_pages, run_paginated_embed, calc_embed
 
 
-fusion_plugin = lightbulb.Plugin("fusion", "Shows the result of a fusion")
+fusion_plugin = lightbulb.Plugin("fusion", "Collection of weapon commands.")
 
 @fusion_plugin.command()
 @lightbulb.option("second", "The second weapon in the fusion", str, required=True)

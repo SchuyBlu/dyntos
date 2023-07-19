@@ -29,6 +29,8 @@ TOKEN = str(getenv("TOKEN")) # convert to str as per lightbulb reqs
 
 extensions = [
     "extensions/fusion",
+    "extensions/solo",
+    "extensions/fun"
 ]
 
 bot = lightbulb.BotApp(
