@@ -1,4 +1,9 @@
+# Install specific environment file
 .env
+
+# Python virtual environment
+.venv
+
+# Misc files
 *__pycache__*
 *.log
-*.jpg

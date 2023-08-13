@@ -17,10 +17,12 @@ The bot has limited features, and the use case is pretty much exclusively limite
 ## Installation
 If for whatever reason you're wanting to run the bot yourself, there are a few things you'll need first.
 
-You'll need to install [Python](https://www.python.org/downloads/) and include `pip` in your installation. Running the following commands will install all the dependencies.
+You'll need to install [Python](https://www.python.org/downloads/) and include `pip` in your installation. The following will create a virtual environment for the application, with all it's dependencies. A virtual environment is required to allow for as much compatibility as possible across devices, as some will automatically adhere to `PEP 668`.
 ```
 git clone https://github.com/SchuyBlu/dyntos.git
 cd ./dyntos
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 You'll also need to create a [discord application](https://discord.com/developers/applications) and give it the `bot`, `applications.commands`, and `Administrator` scopes. You'll need to generate a token for the bot and place it in a file named `.env` at the root of the project in this format:
