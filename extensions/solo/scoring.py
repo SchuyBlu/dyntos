@@ -37,8 +37,8 @@ async def score(ctx: lightbulb.Context):
 
     has_permission = False
     for role in ctx.member.get_roles():
-        is_secretary = role.name == "Point Secretary and Spreader of Sheets",
-        is_admin = role.permissions.ADMINISTRATOR
+        is_secretary = (role.name == "Point Secretary and Spreader of Sheets")
+        is_admin = (role.permissions.ADMINISTRATOR)
         if is_secretary or is_admin:
             has_permission = True
 
