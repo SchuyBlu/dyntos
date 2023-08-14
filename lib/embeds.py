@@ -24,6 +24,7 @@ from lightbulb.utils import pag, nav
 from lib.fuse_results import str_to_wep
 import json
 
+
 def fusion_embed(first, second, result, group):
     with open("data/weapon_images.json") as data:
         weapon_images = json.load(data)

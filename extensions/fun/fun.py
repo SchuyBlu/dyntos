@@ -5,6 +5,7 @@ import lightbulb
 from PIL import Image
 import urllib.request
 from io import BytesIO
+from lib.sanitizer import contains_url
 from lightbulb.commands.base import OptionModifier
 
 
@@ -54,8 +55,14 @@ async def slap(ctx: lightbulb.Context):
 @lightbulb.command("uwuify", "Uwuifies text.")
 @lightbulb.implements(lightbulb.SlashCommand)
 async def uwuify(ctx: lightbulb.Context):
-    if len(ctx.options.text) > 2000:
-        await ctx.respond("Message needs to be under 2000 characters.")
+    # Make sure string is below 2000 characters
+    if len(ctx.options.text) >= 2000:
+        await ctx.respond("Message needs to be under 2000 characters.", flags=hikari.MessageFlag.EPHEMERAL)
+        return
+
+    # Make sure string doesn't contain URL
+    if contains_url(ctx.options.text):
+        await ctx.respond("Message cannot contain a URL.", flags=hikari.MessageFlag.EPHEMERAL)
         return
 
     with open("data/asterisk_options.json") as data:
