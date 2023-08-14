@@ -35,10 +35,11 @@ chapter_plugin = lightbulb.Plugin("Chapter", "Collection of solo commands")
 async def score(ctx: lightbulb.Context):
     score = ctx.options.score
 
+    required = hikari.permissions.Permissions.ADMINISTRATOR
     has_permission = False
     for role in ctx.member.get_roles():
         is_secretary = (role.name == "Point Secretary and Spreader of Sheets")
-        is_admin = (role.permissions.ADMINISTRATOR)
+        is_admin = ((role.permissions & required) == required)
         if is_secretary or is_admin:
             has_permission = True
 
