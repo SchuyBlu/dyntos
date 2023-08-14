@@ -21,6 +21,7 @@ You'll need to install [Python](https://www.python.org/downloads/) and include `
 ```
 git clone https://github.com/SchuyBlu/dyntos.git
 cd ./dyntos
+mkdir Tests/logs
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
